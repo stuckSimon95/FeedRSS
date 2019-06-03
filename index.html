@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    .display-4{
+        font-size: 2.8rem;
+    }
+</style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fedd RSS</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
+  integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <!-- Web App ico -->
+  <link rel="shortcut icon" href="img/feed-rss-blog-300x300.png">
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+</head>
+<body>
+  
+  <div class="container-fluid">
+    <div id="_header">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!--         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" 
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <a class="navbar-brand" href=".">APP</a>
+      
+        <div class="navbar-collapse" id="navbarTogglerDemo03">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="getBlogAPI">Blog <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </div>
+
+    <div id="appTitle">
+        <h1 class="display-3 mb-4" style="margin-top: 3.2rem">Feed RSS</h1>
+    </div>
+
+    <div class="d-flex">
+    </div>
+
+    <div id="output">
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('getBlogAPI').addEventListener('click', getBlogAPI);
+
+    function getBlogText()
+    {
+      fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
+      .then((res) => res.text())
+      .then((data) => {
+        document.getElementById('output').innerHTML = data;
+      })
+      .catch((err) => console.log(err))
+    }
+
+    function getBlogAPI()
+    {
+      fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
+      .then((res) => res.json())
+      .then((data) => {
+        let output = '';
+        data.forEach(function(user){
+          if(user.CoverImage == null)
+          {
+            output += `
+            <div class="card card-body mb-3 text-center list-group-item-action">
+              <h4 class="display-4">${user.Title}</h4>
+              <p class="">
+                <img src=""
+                class="img-fluid">
+              </p>
+              <p class="">${user.InsertionDate}</p>
+              <p class="">${user.Content}</p>
+            </div>
+          `;
+          }
+          else
+          {
+            output += `
+            <div class="card card-body mb-3 text-center list-group-item-action">
+              <h4 class="display-4">${user.Title}</h4>
+              <p class="">
+                <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
+                class="img-fluid">
+              </p>
+              <p class="">${user.InsertionDate}</p>
+              <p class="">${user.Content}</p>
+            </div>
+          `;
+          }
+          
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+    }
+
+    function getBlogIMG()
+    {
+      /* console.log('getBlogIMG');  
+      fetch('https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/1?dimension={}')
+      .then((res) => res.text())
+      .then((data) => {
+        document.getElementById('output').innerHTML = data;
+      })
+      .catch((err) => console.log(err)); */
+    }
+
+    function addPost(e)
+    {
+      e.preventDefault();
+
+      let title = document.getElementById('title').value;
+      let body = document.getElementById('body').value;
+
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type':'application/json'
+        },
+        body:JSON.stringify({title:title, body:body})
+      })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+    }
+
+    function arrayBufferToBase64(buffer) {
+      var binary = '';
+      var bytes = [].slice.call(new Uint8Array(buffer));
+
+      bytes.forEach((b) => binary += String.fromCharCode(b));
+
+      return window.btoa(binary);
+    };
+  </script>
+
+    <script src="./app.js"></script>
+</body>
+</html>
