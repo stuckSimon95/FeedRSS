@@ -1,9 +1,9 @@
 {
     "dir": "ltr",
     "lang": "en",
-    "name": "PWA Fetch API Test",
+    "name": "Feed RSS PWA",
     "display": "fullscreen",
-    "start_url": "/",
+    "start_url": ".",
     "short_name": "FAT",
     "theme_color": "transparent",
     "description": "A PWA Fetch API Test App",
@@ -14,9 +14,29 @@
     "icons":
     [
         {
-            "src": "img/2048-logo-144x144.png",
-            "sizes": "144x144",
+            "src": "img/feed-rss-256x256.png",
+            "sizes": "256x256",
             "type": "image/png"
-        }
+        },
+        {
+            "src": "img/feed-rss-blog-300x300.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        },
+        {
+            "src": "img/feed_rss_256x256_xjm_icon.ico",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "img/feed-rss-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "img/feed-rss-54x54.png",
+            "sizes": "54x54",
+            "type": "image/png"
+        }  
     ]
 }

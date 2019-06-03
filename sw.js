@@ -15,7 +15,7 @@ const VERSION = "v1",
     DYNAMIC_CACHE_MAX = 20,
     PRECACHE_URLS = [
         "index.html",
-        "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        "js/app.js"
     ];
 //    IDB_NAME = "sw_cache",
 //    URL_CACHE_DB = "url-meta-cache",
@@ -25,6 +25,7 @@ const VERSION = "v1",
 
 
 function cacheName(key) {
+    console.log(key + "-" + VERSION);
     return key + "-" + VERSION;
 }
 
@@ -65,8 +66,6 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-
-    console.log('fetch');
 
     let request = event.request;
 
