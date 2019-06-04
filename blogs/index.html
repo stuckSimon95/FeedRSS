@@ -16,12 +16,14 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css"> -->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/_header.css">
+    <link rel="stylesheet" href="../bower_components/aos/dist/aos.css" />
     <!-- Web App ico -->
     <link rel="shortcut icon" href="../img/icon-rss-56x56.png">
     <!-- Web Application Manifest -->
     <link rel="manifest" href="../manifest.json">
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/aos/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
@@ -34,6 +36,7 @@
         <div id="_header">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
                 <a class="navbar-brand" href="..">
+                    <i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;
                     <img src="../img/icon-rss-56x56.png" class="bounceInUp" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
@@ -68,19 +71,21 @@
             </nav>
             
         </div>
-    
-        <div id="appTitle">
-            <h1 class="display-3 mb-4" style="margin-top: 3.2rem">Feed RSS</h1>
+
+        <div id="appTitle" data-aos="zoom-in" data-aos-duration="600" data-aos-anchor-placement="center-center">
+            <h1 class="display-3 mb-4" style="margin-top: 3.2rem"><kbd>Feed RSS</kbd></h1>
         </div>
     
         <div id="output">
         </div>
         
     </div>
-    <script src="blog.js"></script>
+
     <script>
+        
         $(document).ready(function()
         {
+            AOS.init();
             $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
             {
                 getBlogAPI();
@@ -90,7 +95,24 @@
             {
                 var selectedDiv = $(this);
                 var idBlog = selectedDiv.children('input').attr('id');
-                console.log(idBlog);
+                
+                $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
+                {
+                    getSingleBlog(idBlog);
+                });
+
+                // redirect to single blog
+                //window.location.replace("../blog/index.html");
+
+                // AJAX CALL
+                /* $.ajax({
+                method: "GET",
+                url: "blog.js",
+                data: { id : idBlog }
+                })
+                .done(function( msg ) {
+                    alert( "Data Saved: " + idBlog );
+                }); */
             });
         });
 
@@ -101,35 +123,84 @@
             .then((data) => {
                 let output = '';
                 data.forEach(function(user){
-                if(user.CoverImage == null)
-                {
-                    output += `
-                    <div class="card card-body mb-3 text-center list-group-item-action">
-                    <input id="${user.ID}" type="hidden">
-                    <h4 class="display-4">${user.Title}</h4>
-                    <p class="">
-                        <img src=""
-                        class="img-fluid img-responsive">
-                    </p>
-                    <p class="">${user.InsertionDate}</p>
-                    <p class="">${user.Content}</p>
-                    </div>
-                `;
-                }
-                else
-                {
-                    output += `
-                    <div class="card card-body mb-3 text-center list-group-item-action">
-                    <input id="${user.ID}" type="hidden">
-                    <h4 class="display-4">${user.Title}</h4>
-                    <p class="">
-                        <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
-                        class="img-fluid img-responsive">
-                    </p>
-                    <p class="">${user.InsertionDate}</p>
-                    <p class="">${user.Content}</p>
-                    </div>
-                `;
+                    var substrContent = user.Content.substring(0,20);
+                    console.log(substrContent);
+                    if(user.CoverImage == null)
+                    {
+                        output += `
+                        <div class="card card-body mb-3 text-center list-group-item-action" data-aos="fade-up"
+                        data-aos-duration="600" data-aos-anchor-placement="bottom-bottom">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src=""
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${user.Content}</p>
+                        </div>
+                    `;
+                    }
+                    else
+                    {
+                        output += `
+                        <div class="card card-body mb-3 text-center list-group-item-action" data-aos="fade-up"
+                        data-aos-duration="600" data-aos-anchor-placement="bottom-bottom">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${user.Content}</p>
+                        </div>
+                    `;
+                    }
+                
+                });
+                document.getElementById('output').innerHTML = output;
+            })
+        }
+
+        function getSingleBlog(idBlog)
+        {
+            fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = '';
+                data.forEach(function(user){
+                if(user.ID == idBlog){
+                    if(user.CoverImage == null)
+                    {
+                        output += `
+                        <div class="card card-body mb-3 text-center list-group-item-action">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src=""
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${user.Content}</p>
+                        </div>
+                    `;
+                    }
+                    else
+                    {
+                        output += `
+                        <div class="card card-body mb-3 text-center list-group-item-action">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${user.Content}</p>
+                        </div>
+                    `;
+                    }
                 }
                 
                 });

@@ -41,6 +41,7 @@
 
             if (choiceResult.outcome === 'accepted') {
                 // hide our user interface that shows our A2HS button
+                console.log(a2hsBtn.style);
                 a2hsBtn.style.display = 'none';
                 console.log('User accepted the A2HS prompt');
             } else {
@@ -52,12 +53,6 @@
             });
         }
 
-    }
-
-    if(deferredPrompt == undefined)
-    {
-        console.log($('#header'));
-        $('.btn').attr('display','none');
     }
 })();
 

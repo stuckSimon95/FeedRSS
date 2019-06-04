@@ -14,18 +14,20 @@ const VERSION = "v1",
     MP3_CACHE_NAME = "episode-mp3-cache",
     DYNAMIC_CACHE_MAX = 20,
     PRECACHE_URLS = [
-        "index.html",
+        "/",
         "app.js",
         "blogs/blog.js",
-        "blogs/index.html",
-        "about/index.html"
+        "blogs/",
+        "about/",
+        "https://ats-gruppidicammino.e-lios.eu/api/Blogs",
+        "https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/3?dimension=MEDIUM",
+        "https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/4?dimension=MEDIUM"
     ];
 //    IDB_NAME = "sw_cache",
 //    URL_CACHE_DB = "url-meta-cache",
 //    CACHE_UPDATE_TTL_KEY = "cache-manifest-ttl",
 //for development I recommend 1 minute or less ;)
 //   PRECACHE_UPDATE_TTL = 1000; //1000 * 60 * 60 * 24; //1 day, can adjust to your desired time frame
-
 
 function cacheName(key) {
     console.log(key + "-" + VERSION);
@@ -48,7 +50,7 @@ self.addEventListener('install', event => {
 
 });
 
-self.addEventListener('activate', event => {
+/* self.addEventListener('activate', event => {
 
     event.waitUntil(
 
@@ -66,10 +68,32 @@ self.addEventListener('activate', event => {
         })
     );
 
+}); */
+
+self.addEventListener('activate', function(event) {
+    event.waitUntil(
+      caches.keys().then(function(cacheNames) {
+          
+        return Promise.all(
+          cacheNames.filter(function(cacheName) {
+              // delete cache every minute
+            setTimeout(() => {
+                caches.delete("dynamic-cache-v1");
+                console.log('dynamic-cache-v1 deleted');
+            }, 1000 * 10);
+            // Return true if you want to remove this cache,
+            // but remember that caches are shared across
+            // the whole origin
+          }).map(function(cacheName) {
+              console.log('delete ' + cacheName + ' cache');
+            return caches.delete(cacheName);
+          })
+        );
+      })
+    );
 });
 
 self.addEventListener('fetch', event => {
-
     let request = event.request;
 
     event.respondWith(
@@ -95,5 +119,5 @@ self.addEventListener('fetch', event => {
             })
         /* end responseWith */
     );
-
 });
+
