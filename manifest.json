@@ -14,29 +14,14 @@
     "icons":
     [
         {
-            "src": "img/feed-rss-256x256.png",
-            "sizes": "256x256",
+            "src": "img/icon-rss-56x56.png",
+            "sizes": "56x56",
             "type": "image/png"
         },
         {
-            "src": "img/feed-rss-blog-300x300.png",
-            "sizes": "300x300",
+            "src": "img/icon-rss-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
-        },
-        {
-            "src": "img/feed_rss_256x256_xjm_icon.ico",
-            "sizes": "256x256",
-            "type": "image/png"
-        },
-        {
-            "src": "img/feed-rss-128x128.png",
-            "sizes": "128x128",
-            "type": "image/png"
-        },
-        {
-            "src": "img/feed-rss-54x54.png",
-            "sizes": "54x54",
-            "type": "image/png"
-        }  
+        } 
     ]
 }

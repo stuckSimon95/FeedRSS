@@ -15,7 +15,10 @@ const VERSION = "v1",
     DYNAMIC_CACHE_MAX = 20,
     PRECACHE_URLS = [
         "index.html",
-        "js/app.js"
+        "app.js",
+        "blogs/blog.js",
+        "blogs/index.html",
+        "about/index.html"
     ];
 //    IDB_NAME = "sw_cache",
 //    URL_CACHE_DB = "url-meta-cache",
