@@ -76,11 +76,12 @@ self.addEventListener('activate', function(event) {
           
         return Promise.all(
           cacheNames.filter(function(cacheName) {
-              // delete cache every minute
-            setTimeout(() => {
+            // delete cache every minute
+            /* setTimeout(() => {
                 caches.delete("dynamic-cache-v1");
                 console.log('dynamic-cache-v1 deleted');
-            }, 1000 * 10);
+            }, 1000 * 10); */
+            
             // Return true if you want to remove this cache,
             // but remember that caches are shared across
             // the whole origin

@@ -24,11 +24,13 @@
         deferredPrompt = e;
         //showAddToHomeScreen();
         document.getElementById('btnAd2hs').addEventListener('click', addToHomeScreen);
+
+        console.log($('#btnAd2hs'));
+        $('#btnAd2hs').show();
     });
 
     function addToHomeScreen() 
     {
-        var a2hsBtn = document.querySelector(".btnAd2hs");
 
         if (deferredPrompt) 
         {
@@ -41,8 +43,6 @@
 
             if (choiceResult.outcome === 'accepted') {
                 // hide our user interface that shows our A2HS button
-                console.log(a2hsBtn.style);
-                a2hsBtn.style.display = 'none';
                 console.log('User accepted the A2HS prompt');
             } else {
                 console.log('User dismissed the A2HS prompt');
@@ -52,7 +52,6 @@
 
             });
         }
-
     }
 })();
 
