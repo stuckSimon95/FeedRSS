@@ -6,7 +6,7 @@
     "start_url": ".",
     "short_name": "FAT",
     "theme_color": "transparent",
-    "description": "A PWA Fetch API Test App",
+    "description": "A Feed RSS Progressive Web App",
     "orientation": "any",
     "background_color": "#fff",
     "related_applications": [],
@@ -23,5 +23,16 @@
             "sizes": "512x512",
             "type": "image/png"
         } 
-    ]
+    ],
+    "dependencies": 
+    {
+    },
+    "devDependencies": {},
+    "scripts": 
+    {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
 }

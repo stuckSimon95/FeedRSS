@@ -1,6 +1,6 @@
 (function() 
 {
-    document.getElementById('getBlogAPI').addEventListener('click', getBlogAPI);
+    //document.getElementById('getBlogAPI').addEventListener('click', getBlogAPI);
     //document.getElementById('btnAd2hs').addEventListener('click', addToHomeScreen);
 
     function getBlogAPI()

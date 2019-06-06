@@ -76,6 +76,7 @@ self.addEventListener('activate', function(event) {
           
         return Promise.all(
           cacheNames.filter(function(cacheName) {
+
             // delete cache every minute
             /* setTimeout(() => {
                 caches.delete("dynamic-cache-v1");

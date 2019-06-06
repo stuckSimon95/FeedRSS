@@ -24,8 +24,7 @@
         deferredPrompt = e;
         //showAddToHomeScreen();
         document.getElementById('btnAd2hs').addEventListener('click', addToHomeScreen);
-
-        console.log($('#btnAd2hs'));
+        
         $('#btnAd2hs').show();
     });
 
