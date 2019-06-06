@@ -1,0 +1,38 @@
+{
+    "dir": "ltr",
+    "lang": "en",
+    "name": "Feed RSS PWA",
+    "display": "fullscreen",
+    "start_url": ".",
+    "short_name": "Feed RSS",
+    "theme_color": "transparent",
+    "description": "A Feed RSS Progressive Web App",
+    "orientation": "any",
+    "background_color": "#fff",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons":
+    [
+        {
+            "src": "img/icon-rss-56x56.png",
+            "sizes": "56x56",
+            "type": "image/png"
+        },
+        {
+            "src": "img/icon-rss-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        } 
+    ],
+    "dependencies": 
+    {
+    },
+    "devDependencies": {},
+    "scripts": 
+    {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
+}

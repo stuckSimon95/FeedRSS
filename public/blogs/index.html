@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fedd RSS</title>
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/_header.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../bower_components/aos/dist/aos.css" />
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/all.css">
+    <!-- Web App ico -->
+    <link rel="shortcut icon" href="../img/icon-rss-56x56.png">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="../manifest.json">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/aos/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        
+        <div id="_header" class="flex flex-row flex-nowrap items-stretch">
+            <nav class="navbar navbar-expand-lg navbar-light btn btn-light">
+                <a class="navbar-brand animated infinite pulse" href="..">
+                    <img src="../img/icon-rss-56x56.png" alt="">
+                </a>
+                <button class="animated pulse navbar-toggler btn btn-outline-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active btn btn-light">
+                            <a class="nav-link animeBlog" onclick="getBlogAPI();">
+                                <i class="fas fa-blog"></i>
+                                <h4>Blog</h4>
+                            </a>
+                        </li>
+                        <li class="nav-item btn btn-light">
+                            <a class="nav-link animeAbout" href="../about/">
+                                <i class="fas fa-info"></i>
+                                <h4>About</h4>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown btn btn-light">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" 
+                            aria-haspopup="true" aria-expanded="false">
+                            <h4>Dropdown link</h4>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0 flex-nowrap btn btn-light">
+                        <input class="form-control mr-sm-2 input-xxxlarge" type="search" placeholder="Cerca.." aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0 search" type="submit">Cerca</button>
+                    </form>
+                </div>
+            </nav>
+            
+        </div>
+        <!-- <div id="awesome">
+            <a href="." class="btnStampa btn btn-small btn-info" target="_blank"><i class="icon-print"></i>PDF</a>
+        </div> -->
+        <div id="appTitle" data-aos="zoom-in" data-aos-duration="600">
+            <h1 class="appTitle display-3 mb-4 font-weight-bold font-italic" style="margin-top: 3.2rem;">Feed RSS</h1>
+        </div>
+    
+        <div id="output">
+        </div>
+        
+    </div>
+
+    <script>
+        
+        $(document).ready(function()
+        {
+            AOS.init();
+            $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
+            {
+                getBlogAPI();
+            });
+
+            /* $(document).on("click", ".card-body", function ()
+            {
+                var selectedDiv = $(this);
+                var idBlog = selectedDiv.children('input').attr('id');
+                
+                $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
+                {
+                    getSingleBlog(idBlog);
+                }); 
+
+                // redirect to single blog
+                //window.location.replace("../blog/index.html");
+
+                // AJAX CALL
+                $.ajax({
+                method: "GET",
+                url: "blog.js",
+                data: { id : idBlog }
+                })
+                .done(function( msg ) {
+                    alert( "Data Saved: " + idBlog );
+                });
+            }); */
+        });
+
+        function getBlogAPI()
+        {
+            fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = '';
+                data.forEach(function(user){
+                    var startPoint = ';">';
+                    var indexOfFirst = user.Content.indexOf(startPoint);
+                    var substrContent = user.Content.substring(indexOfFirst + 3, indexOfFirst + 153) + "...";
+                    console.log(substrContent);
+                    if(user.CoverImage == null)
+                    {
+                        output += `
+                        <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
+                        data-aos-duration="600" onclick="showBlog($(this));">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src=""
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${substrContent}</p>
+                        </div>
+                    `;
+                    }
+                    else
+                    {
+                        output += `
+                        <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
+                        data-aos-duration="600" onclick="showBlog($(this));">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${substrContent}</p>
+                        </div>
+                    `;
+                    }
+                
+                });
+                document.getElementById('output').innerHTML = output;
+            })
+        }
+        
+        function getSingleBlog(idBlog)
+        {
+            console.log('getSingleBlog');
+            fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = '';
+                data.forEach(function(user){
+                if(user.ID == idBlog){
+                    if(user.CoverImage == null)
+                    {
+                        output += `
+                        <button class="btn btn-outline-dark btn-large" type="submit" href=".">
+                            <a href=".">
+                                <i class="fas fa-backward">
+                                    <p>Indietro</p>
+                                </i>
+                            </a>
+                        </button>
+
+                        <div class="card card-body mb-3 text-center">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src=""
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${user.Content}</p>
+                        </div>
+                    `;
+                    }
+                    else
+                    {
+                        output += `
+                        <button class="btn btn-outline-dark btn-large" type="submit" href=".">
+                            <a href=".">
+                                <i class="fas fa-backward">
+                                    <p>Indietro</p>
+                                </i>
+                            </a>
+                        </button>
+
+                        <div class="card card-body mb-3 text-center">
+                        <input id="${user.ID}" type="hidden">
+                        <h4 class="display-4">${user.Title}</h4>
+                        <p class="">
+                            <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
+                            class="img-fluid img-responsive">
+                        </p>
+                        <p class="">${user.InsertionDate}</p>
+                        <p class="">${user.Content}</p>
+                        </div>
+                    `;
+                    }
+                }
+                
+                });
+                document.getElementById('output').innerHTML = output;
+            })
+        }
+
+        function showBlog(div)
+        {
+            var idBlog = div.find('input').attr('id');
+            //window.location.href = window.location.href + '?idBlog=' + idBlog;
+            getSingleBlog(idBlog);
+        }
+    </script>
+</body>
+</html>
