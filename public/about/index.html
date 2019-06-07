@@ -36,15 +36,42 @@
 <body>
     <div class="container-fluid">
 
-        <div id="_header" class="flex flex-row flex-nowrap items-stretch" >
-        </div>
+        <!-- <div id="_header" class="flex flex-row flex-nowrap items-stretch" >
+        </div> -->
+
+        <nav class="navbar">
+            <div class="logo">
+              <a class="navbar-brand active animated infinite pulse" href="..">
+                <img src="../img/icon-rss-56x56.png" alt="">
+              </a>
+            </div>
+              <ul class="nav-links">
+                <li class="nav-item btn btn-light" style="display: none">
+                  <a class="nav-link" href="../blogs/">
+                      <i class="fas fa-blog"></i>
+                      <h4>Blog</h4>
+                  </a>
+                </li>
+                <li class="nav-item active btn btn-light" style="display: none">
+                  <a class="nav-link" href=".">
+                      <i class="fas fa-info"></i>
+                      <h4>About</h4>
+                  </a>
+                </li>
+              </ul>
+              <div class="burger btn btn-light">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+              </div>
+          </nav>
     
         <div id="appTitle" data-aos="zoom-in" data-aos-duration="600">
-            <h1 class="display-3 mb-4 font-weight-bold font-italic" style="margin-top: 3.2rem;">Feed RSS</h1>
+            <h1 class="display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
         </div>
     
         <div id="output" data-aos="fade-up">
-            <h4 class="display-5 mb-4">semplice interfaccia Feed RSS </h4>
+            <p class="display-5 mb-4">semplice interfaccia Feed RSS </p>
         </div>
         
     </div>
@@ -53,8 +80,9 @@
         $(document).ready(function()
         {
             AOS.init();
-            $('#_header').load('_header.html');
+            /* $('#_header').load('_header.html'); */
         });
     </script>
+    <script src="../burger.js"></script>
 </body>
 </html>

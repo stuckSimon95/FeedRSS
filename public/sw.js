@@ -16,12 +16,9 @@ const VERSION = "v1",
     PRECACHE_URLS = [
         "/",
         "app.js",
-        "blogs/blog.js",
+        "burger.js",
         "blogs/",
-        "about/",
-        "https://ats-gruppidicammino.e-lios.eu/api/Blogs",
-        "https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/3?dimension=MEDIUM",
-        "https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/4?dimension=MEDIUM"
+        "about/"
     ];
 //    IDB_NAME = "sw_cache",
 //    URL_CACHE_DB = "url-meta-cache",
@@ -78,10 +75,10 @@ self.addEventListener('activate', function(event) {
           cacheNames.filter(function(cacheName) {
 
             // delete cache every minute
-            /* setTimeout(() => {
+            setTimeout(() => {
                 caches.delete("dynamic-cache-v1");
                 console.log('dynamic-cache-v1 deleted');
-            }, 1000 * 10); */
+            }, 1000 * 8);
             
             // Return true if you want to remove this cache,
             // but remember that caches are shared across

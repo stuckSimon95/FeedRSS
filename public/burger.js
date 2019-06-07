@@ -3,13 +3,13 @@ const navSlide = () => {
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
 
+    $('.nav-links li').hide();
     // toggle NAV
     burger.addEventListener('click', () => {
         nav.classList.toggle('nav-active');
 
         // animate links
         navLinks.forEach((link, index) => {
-            console.log(link);
         if(link.style.animation){
             link.style.animation = '';
         } else {
@@ -18,6 +18,14 @@ const navSlide = () => {
         });
 
         burger.classList.toggle('toggle');
+
+        if(nav.classList.contains('nav-active'))
+        {
+            $('.nav-links li').show();
+        }
+        else{
+            $('.nav-links li').hide();
+        }
     });
 }
 

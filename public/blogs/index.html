@@ -31,54 +31,40 @@
     <div class="container-fluid">
         
         <div id="_header" class="flex flex-row flex-nowrap items-stretch">
-            <nav class="navbar navbar-expand-lg navbar-light btn btn-light">
-                <a class="navbar-brand animated infinite pulse" href="..">
+            <nav class="navbar">
+                <div class="logo">
+                  <a class="navbar-brand active animated infinite pulse" href="..">
                     <img src="../img/icon-rss-56x56.png" alt="">
-                </a>
-                <button class="animated pulse navbar-toggler btn btn-outline-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active btn btn-light">
-                            <a class="nav-link animeBlog" onclick="getBlogAPI();">
-                                <i class="fas fa-blog"></i>
-                                <h4>Blog</h4>
-                            </a>
-                        </li>
-                        <li class="nav-item btn btn-light">
-                            <a class="nav-link animeAbout" href="../about/">
-                                <i class="fas fa-info"></i>
-                                <h4>About</h4>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown btn btn-light">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" 
-                            aria-haspopup="true" aria-expanded="false">
-                            <h4>Dropdown link</h4>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0 flex-nowrap btn btn-light">
-                        <input class="form-control mr-sm-2 input-xxxlarge" type="search" placeholder="Cerca.." aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-0 search" type="submit">Cerca</button>
-                    </form>
+                  </a>
                 </div>
-            </nav>
+                  <ul class="nav-links">
+                    <li class="nav-item active btn btn-light" style="display: none">
+                      <a class="nav-link" href=".">
+                          <i class="fas fa-blog"></i>
+                          <h4>Blog</h4>
+                      </a>
+                    </li>
+                    <li class="nav-item btn btn-light" style="display: none">
+                      <a class="nav-link" href="../about/">
+                          <i class="fas fa-info"></i>
+                          <h4>About</h4>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="burger btn btn-light">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+              </nav>
             
         </div>
         <!-- <div id="awesome">
             <a href="." class="btnStampa btn btn-small btn-info" target="_blank"><i class="icon-print"></i>PDF</a>
         </div> -->
         <div id="appTitle" data-aos="zoom-in" data-aos-duration="600">
-            <h1 class="appTitle display-3 mb-4 font-weight-bold font-italic" style="margin-top: 3.2rem;">Feed RSS</h1>
-        </div>
+            <h1 class="appTitle display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
+        </div> 
     
         <div id="output">
         </div>
@@ -129,8 +115,12 @@
                 data.forEach(function(user){
                     var startPoint = ';">';
                     var indexOfFirst = user.Content.indexOf(startPoint);
-                    var substrContent = user.Content.substring(indexOfFirst + 3, indexOfFirst + 153) + "...";
-                    console.log(substrContent);
+                    var substrContent = user.Content.substring(indexOfFirst + 3, indexOfFirst + 183) + "...";
+
+                    startPoint = 'T';
+                    indexOfFirst = user.InsertionDate.indexOf(startPoint);
+                    var date = user.InsertionDate.substring(0, indexOfFirst);
+                    var time = user.InsertionDate.substring(indexOfFirst + 1);
                     if(user.CoverImage == null)
                     {
                         output += `
@@ -138,12 +128,16 @@
                         data-aos-duration="600" onclick="showBlog($(this));">
                         <input id="${user.ID}" type="hidden">
                         <h4 class="display-4">${user.Title}</h4>
-                        <p class="">
+                        <p>
                             <img src=""
                             class="img-fluid img-responsive">
                         </p>
-                        <p class="">${user.InsertionDate}</p>
-                        <p class="">${substrContent}</p>
+                        <p> Data: ${date} 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            Ora: ${time}
+                        </p>
+                        <p>${substrContent}</p>
                         </div>
                     `;
                     }
@@ -154,12 +148,16 @@
                         data-aos-duration="600" onclick="showBlog($(this));">
                         <input id="${user.ID}" type="hidden">
                         <h4 class="display-4">${user.Title}</h4>
-                        <p class="">
+                        <p>
                             <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
                             class="img-fluid img-responsive">
                         </p>
-                        <p class="">${user.InsertionDate}</p>
-                        <p class="">${substrContent}</p>
+                        <p> Data: ${date} 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            Ora: ${time}
+                        </p>
+                        <p>${substrContent}</p>
                         </div>
                     `;
                     }
@@ -167,6 +165,21 @@
                 });
                 document.getElementById('output').innerHTML = output;
             })
+            .catch((error) => {
+                output += `
+                <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
+                data-aos-duration="600">
+                    <span class="fas fa-wifi" style="margin-bottom: 6px"></span>
+                    <h4 class="display-4">HTTP 503 Service Unavailable</h4>
+                    <p>Sei offline, prova a riconnettere il dispositivo e ricaricare la pagina</p>
+                </div>`;
+                
+                var startPoint = 'Element]';
+                var indexOfFirst = output.indexOf(startPoint);
+                var substrOutput = output.substring(indexOfFirst + 8);
+
+                document.getElementById('output').innerHTML = substrOutput;
+            });
         }
         
         function getSingleBlog(idBlog)
@@ -178,6 +191,12 @@
                 let output = '';
                 data.forEach(function(user){
                 if(user.ID == idBlog){
+
+                    var startPoint = 'T';
+                    var indexOfFirst = user.InsertionDate.indexOf(startPoint);
+                    var date = user.InsertionDate.substring(0, indexOfFirst);
+                    var time = user.InsertionDate.substring(indexOfFirst + 1);
+
                     if(user.CoverImage == null)
                     {
                         output += `
@@ -192,12 +211,16 @@
                         <div class="card card-body mb-3 text-center">
                         <input id="${user.ID}" type="hidden">
                         <h4 class="display-4">${user.Title}</h4>
-                        <p class="">
+                        <p>
                             <img src=""
                             class="img-fluid img-responsive">
                         </p>
-                        <p class="">${user.InsertionDate}</p>
-                        <p class="">${user.Content}</p>
+                        <p> Data: ${date} 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            Ora: ${time}
+                        </p>
+                        <p>${user.Content}</p>
                         </div>
                     `;
                     }
@@ -215,12 +238,16 @@
                         <div class="card card-body mb-3 text-center">
                         <input id="${user.ID}" type="hidden">
                         <h4 class="display-4">${user.Title}</h4>
-                        <p class="">
+                        <p>
                             <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
                             class="img-fluid img-responsive">
                         </p>
-                        <p class="">${user.InsertionDate}</p>
-                        <p class="">${user.Content}</p>
+                        <p> Data: ${date} 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            Ora: ${time}
+                        </p>
+                        <p>${user.Content}</p>
                         </div>
                     `;
                     }
@@ -238,5 +265,6 @@
             getSingleBlog(idBlog);
         }
     </script>
+    <script src="../burger.js"></script>
 </body>
 </html>
