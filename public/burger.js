@@ -6,7 +6,9 @@ const navSlide = () => {
     $('.nav-links li').hide();
     // toggle NAV
     burger.addEventListener('click', () => {
+        
         nav.classList.toggle('nav-active');
+        //$('.nav-links').toggle('nav-active');
 
         // animate links
         navLinks.forEach((link, index) => {

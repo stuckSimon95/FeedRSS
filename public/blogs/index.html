@@ -39,7 +39,7 @@
                 </div>
                   <ul class="nav-links">
                     <li class="nav-item active btn btn-light" style="display: none">
-                      <a class="nav-link" href=".">
+                      <a class="nav-link" onclick="getBlogAPI();">
                           <i class="fas fa-blog"></i>
                           <h4>Blog</h4>
                       </a>
@@ -62,13 +62,12 @@
         <!-- <div id="awesome">
             <a href="." class="btnStampa btn btn-small btn-info" target="_blank"><i class="icon-print"></i>PDF</a>
         </div> -->
-        <div id="appTitle" data-aos="zoom-in" data-aos-duration="600">
-            <h1 class="appTitle display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
-        </div> 
+        <h1 data-aos="zoom-in" data-aos-duration="600" class="appTitle display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
     
         <div id="output">
         </div>
         
+        <div id="_footer"></div>
     </div>
 
     <script>
@@ -76,195 +75,17 @@
         $(document).ready(function()
         {
             AOS.init();
-            $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
+            $('#_footer').load('../_footer.html');
+
+            //$.getScript("../fetchAPI.js");
+            /* $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
             {
                 getBlogAPI();
-            });
-
-            /* $(document).on("click", ".card-body", function ()
-            {
-                var selectedDiv = $(this);
-                var idBlog = selectedDiv.children('input').attr('id');
-                
-                $.getScript( "blog.js", function( data, textStatus, jqxhr ) 
-                {
-                    getSingleBlog(idBlog);
-                }); 
-
-                // redirect to single blog
-                //window.location.replace("../blog/index.html");
-
-                // AJAX CALL
-                $.ajax({
-                method: "GET",
-                url: "blog.js",
-                data: { id : idBlog }
-                })
-                .done(function( msg ) {
-                    alert( "Data Saved: " + idBlog );
-                });
             }); */
         });
-
-        function getBlogAPI()
-        {
-            fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
-            .then((res) => res.json())
-            .then((data) => {
-                let output = '';
-                data.forEach(function(user){
-                    var startPoint = ';">';
-                    var indexOfFirst = user.Content.indexOf(startPoint);
-                    var substrContent = user.Content.substring(indexOfFirst + 3, indexOfFirst + 183) + "...";
-
-                    startPoint = 'T';
-                    indexOfFirst = user.InsertionDate.indexOf(startPoint);
-                    var date = user.InsertionDate.substring(0, indexOfFirst);
-                    var time = user.InsertionDate.substring(indexOfFirst + 1);
-                    if(user.CoverImage == null)
-                    {
-                        output += `
-                        <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
-                        data-aos-duration="600" onclick="showBlog($(this));">
-                        <input id="${user.ID}" type="hidden">
-                        <h4 class="display-4">${user.Title}</h4>
-                        <p>
-                            <img src=""
-                            class="img-fluid img-responsive">
-                        </p>
-                        <p> Data: ${date} 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            Ora: ${time}
-                        </p>
-                        <p>${substrContent}</p>
-                        </div>
-                    `;
-                    }
-                    else
-                    {
-                        output += `
-                        <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
-                        data-aos-duration="600" onclick="showBlog($(this));">
-                        <input id="${user.ID}" type="hidden">
-                        <h4 class="display-4">${user.Title}</h4>
-                        <p>
-                            <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
-                            class="img-fluid img-responsive">
-                        </p>
-                        <p> Data: ${date} 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            Ora: ${time}
-                        </p>
-                        <p>${substrContent}</p>
-                        </div>
-                    `;
-                    }
-                
-                });
-                document.getElementById('output').innerHTML = output;
-            })
-            .catch((error) => {
-                output += `
-                <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
-                data-aos-duration="600">
-                    <span class="fas fa-wifi" style="margin-bottom: 6px"></span>
-                    <h4 class="display-4">HTTP 503 Service Unavailable</h4>
-                    <p>Sei offline, prova a riconnettere il dispositivo e ricaricare la pagina</p>
-                </div>`;
-                
-                var startPoint = 'Element]';
-                var indexOfFirst = output.indexOf(startPoint);
-                var substrOutput = output.substring(indexOfFirst + 8);
-
-                document.getElementById('output').innerHTML = substrOutput;
-            });
-        }
         
-        function getSingleBlog(idBlog)
-        {
-            console.log('getSingleBlog');
-            fetch('https://ats-gruppidicammino.e-lios.eu/api/Blogs')
-            .then((res) => res.json())
-            .then((data) => {
-                let output = '';
-                data.forEach(function(user){
-                if(user.ID == idBlog){
-
-                    var startPoint = 'T';
-                    var indexOfFirst = user.InsertionDate.indexOf(startPoint);
-                    var date = user.InsertionDate.substring(0, indexOfFirst);
-                    var time = user.InsertionDate.substring(indexOfFirst + 1);
-
-                    if(user.CoverImage == null)
-                    {
-                        output += `
-                        <button class="btn btn-outline-dark btn-large" type="submit" href=".">
-                            <a href=".">
-                                <i class="fas fa-backward">
-                                    <p>Indietro</p>
-                                </i>
-                            </a>
-                        </button>
-
-                        <div class="card card-body mb-3 text-center">
-                        <input id="${user.ID}" type="hidden">
-                        <h4 class="display-4">${user.Title}</h4>
-                        <p>
-                            <img src=""
-                            class="img-fluid img-responsive">
-                        </p>
-                        <p> Data: ${date} 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            Ora: ${time}
-                        </p>
-                        <p>${user.Content}</p>
-                        </div>
-                    `;
-                    }
-                    else
-                    {
-                        output += `
-                        <button class="btn btn-outline-dark btn-large" type="submit" href=".">
-                            <a href=".">
-                                <i class="fas fa-backward">
-                                    <p>Indietro</p>
-                                </i>
-                            </a>
-                        </button>
-
-                        <div class="card card-body mb-3 text-center">
-                        <input id="${user.ID}" type="hidden">
-                        <h4 class="display-4">${user.Title}</h4>
-                        <p>
-                            <img src="https://ats-gruppidicammino.e-lios.eu/Blog/GetBlogFile/${user.CoverImage}?dimension=MEDIUM"
-                            class="img-fluid img-responsive">
-                        </p>
-                        <p> Data: ${date} 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                            Ora: ${time}
-                        </p>
-                        <p>${user.Content}</p>
-                        </div>
-                    `;
-                    }
-                }
-                
-                });
-                document.getElementById('output').innerHTML = output;
-            })
-        }
-
-        function showBlog(div)
-        {
-            var idBlog = div.find('input').attr('id');
-            //window.location.href = window.location.href + '?idBlog=' + idBlog;
-            getSingleBlog(idBlog);
-        }
     </script>
     <script src="../burger.js"></script>
+    <script src="../fetchAPI.js"></script>
 </body>
 </html>

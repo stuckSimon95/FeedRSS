@@ -122,10 +122,10 @@ nav{
     background-blend-mode: screen;
 }
 
-#appTitle
+h1
 {
-    color: #333333;
-    text-align: center;
+    color: #333333 !important;
+    text-align: center !important;
 }
 
 .img-fluid{
@@ -141,6 +141,7 @@ nav{
 p{
     font-size: 0.75rem !important;
     margin-bottom: 0.3rem !important;
+    align-content: center !important;
 }
 
 h4{
@@ -157,6 +158,11 @@ h4{
     position: center;
     transition: all 1s;
     padding: 0.6rem !important;
+}
+
+#contatti{
+    margin-right: 15%;
+    margin-left: 15%;
 }
 
 #output{

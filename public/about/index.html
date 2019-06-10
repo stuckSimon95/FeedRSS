@@ -66,13 +66,17 @@
               </div>
           </nav>
     
-        <div id="appTitle" data-aos="zoom-in" data-aos-duration="600">
-            <h1 class="display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
-        </div>
+        <h1 data-aos="zoom-in" data-aos-duration="600" class="appTitle display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
     
-        <div id="output" data-aos="fade-up">
-            <p class="display-5 mb-4">semplice interfaccia Feed RSS </p>
+        <div id="contatti" data-aos="fade-up">
+            <h6 class="display-4 mb-2" style="font-size: 20px !important">Contatti: </h6>
+            <button type="submit" class="btn btn-light" onclick="mostraContatti();">MOSTRA</button>
         </div>
+
+        <div id="output" data-aos="fade-up">
+        </div>
+
+        <div id="_footer"></div>
         
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -80,9 +84,44 @@
         $(document).ready(function()
         {
             AOS.init();
-            /* $('#_header').load('_header.html'); */
+            $('#_footer').load('../_footer.html');
         });
+
+        function mostraContatti()
+        {
+          fetch('../users.json')
+          .then((res) => res.json())
+          .then((data) => {
+            let output = '';
+            output += 
+            `<table class="table table-dark table-hover text-center">
+              <tr>
+                <th>
+                  Nome
+                </th>
+                <th>
+                  Cognome
+                </th>
+                <th>
+                  Email
+                </th>
+              </tr>`;
+              
+              data.forEach(function(user)
+              {
+                output +=
+                `<tr>
+                  <td>${user.name}</td>
+                  <td>${user.surname}</td>
+                  <td>${user.email}</td>
+                </tr>`
+              });
+
+              document.getElementById('output').innerHTML = output;
+          });
+        }
     </script>
+
     <script src="../burger.js"></script>
 </body>
 </html>

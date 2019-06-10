@@ -2,16 +2,19 @@
   {
     "id":1,
     "name":"Rick",
+    "surname":"Power",
     "email":"rick@gmail.com"
   },
   {
     "id":2,
     "name":"Glenn",
+    "surname":"Strokes",
     "email":"glenn@gmail.com"
   },
   {
     "id":3,
     "name":"Negan",
+    "surname":"Paul",
     "email":"negan@gmail.com"
   }
 ]
