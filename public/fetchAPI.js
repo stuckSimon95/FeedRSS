@@ -12,7 +12,10 @@ function getBlogAPI()
         output += `
         <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
         data-aos-duration="600">
-        <p>Connessione non riuscita</p>
+        <i class="fas fa-wifi"></i>
+        <span> Nessuna connessione a Internet </span>
+        <br>
+        <p style="font-size: 10px !important;">ERR_INTERNET_DISCONNECTED</p>
         </div>
         `;  
     }
@@ -86,7 +89,7 @@ function getSingleBlog(idBlog)
     .then((data) => {
         let output = '';
         data.forEach(function(blog){
-        if(blog.ID == idBlog){
+        if(blog.ID == idBlog) {
 
             var startPoint = 'T';
             var indexOfFirst = blog.InsertionDate.indexOf(startPoint);
@@ -94,15 +97,15 @@ function getSingleBlog(idBlog)
             var time = blog.InsertionDate.substring(indexOfFirst + 1);
             var indexMsPoint = time.indexOf('.');
             time = time.substring(0, indexMsPoint);
+            
+            var backButton = `
+            <a class="nav-link btn btn-light" href="." style="">
+                <i class="fas fa-backward"></i>
+                <h4>Indietro</h4>
+            </a>`;
 
-            output += `
-                <button class="btn btn-light" type="submit" href=".">
-                    <a href=".">
-                        <i class="fas fa-backward">
-                            <p>Indietro</p>
-                        </i>
-                    </a>
-                </button>`;
+            $('.navbar').after(backButton);
+
             if(blog.CoverImage == null)
             {
                 output += `
@@ -137,9 +140,14 @@ function getSingleBlog(idBlog)
             }
         }
         
-        });
+        })
         document.getElementById('output').innerHTML = output;
-    })
+    });
+ 
+    /* $('html, body').animate({
+        scrollTop: $(".scrollTop").offset().top
+    }); */
+    $(document).scrollTop(0);
 }
 
 function showBlog(div)

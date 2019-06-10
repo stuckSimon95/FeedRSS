@@ -1,16 +1,14 @@
 'use strict';
 
+/* import $ from "./bower_components/jquery/dist/jquery";
+console.log($); */
+
 /*
 Constants used in the functions to ensure consistency
 Adjust values to fit your desired naming and time frame conventions.
 */
 var pathPreScript = "/PWAPodcast/site/localhost/";
 const CACHE_NAME = "cache-v1";
-    //DYNAMIC_CACHE_NAME = "dynamic-cache",
-   // DYNAMIC_CACHE_MAX = 20,
-    /* CACHE_ASSETS = [
-        "./public/",
-    ]; */
 
 self.addEventListener('install', event => {
     console.log('SW installed');
@@ -61,6 +59,23 @@ self.addEventListener('fetch', (event) => {
     );
 });
 
+// delete old cache every minute
+setTimeout(() => {
+    //debugger;
+    caches.keys().then(cacheNames => {
+        return Promise.all(
+            cacheNames.map(function(CACHE_NAME) {
+                console.log(CACHE_NAME + ' deleted');
+                return caches.delete(CACHE_NAME);
+            })
+        );
+    });
+
+    /* SHOW POPUP */
+    //showPopUp();
+
+}, 1000 * 60);
+
 /* self.addEventListener('fetch', event => {
     let request = event.request;
     event.respondWith(
@@ -88,3 +103,18 @@ self.addEventListener('fetch', (event) => {
     ); 
 }); */
 
+function showPopUp() {
+    console.log(Notification);
+    Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+            /* navigator.serviceWorker.ready.then(function(registration) {
+                registration.showNotification('Vibration Sample', {
+                    body: 'Buzz! Buzz!',
+                    icon: '../images/touch/chrome-touch-icon-192x192.png',
+                    vibrate: [200, 100, 200, 100, 200, 100, 200],
+                    tag: 'vibration-sample'
+                });
+            }); */
+        }
+    });
+}
