@@ -1,35 +1,36 @@
-let request = new Request("https://ats-gruppidicammino.e-lios.eu/api/Blogs");
+var request = new Request(
+    "https://ats-gruppidicammino.e-lios.eu/api/Blogs"
+);
 
 getBlogAPI();
 
 function getBlogAPI()
 {
     let output = '';
-
     // messaggio offline
     if(!navigator.onLine)
     {
         output += `
         <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
         data-aos-duration="600">
-        <i class="fas fa-wifi"></i>
-        <span> Nessuna connessione a Internet </span>
+        <i class="far fa-times-circle fa-6x" style="font-weight: 800"></i>
+        <h3> Nessuna connessione a Internet </h3>
         <br>
-        <p style="font-size: 10px !important;">ERR_INTERNET_DISCONNECTED</p>
+        <p style="font-size: 15px !important;">Controllare che la connessione sia presente e ricaricare la pagina</p>
         </div>
         `;  
     }
 
     fetch(request)
     .then(function(response) {
-        if(!response.ok)
+        if(response.status !== 200)
         {
-            throw Error(response.statusText);
+            console.log('PROBLEM: ' + response.status);
+            return;
         }
-        //console.log(response);
         return response.json();
     })
-    .then((data) => {
+    .then(function(data) {
         data.forEach(function(blog){
             var startPoint = ';">';
             var indexOfFirst = blog.Content.indexOf(startPoint);
@@ -76,10 +77,14 @@ function getBlogAPI()
                 </div>
             `;
             }
-        
+            document.getElementById('output').innerHTML = output;
         });
+    })
+    .catch(function(error) 
+    {
+        console.log(error);
         document.getElementById('output').innerHTML = output;
-    });
+    }) 
 }
 
 function getSingleBlog(idBlog)

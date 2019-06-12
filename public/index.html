@@ -32,14 +32,11 @@
   integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-  <!-- Load React. -->
-  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-  <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
-  <script type="text/jsx" src="js/e-burger.js"></script>
-  <script type="text/jsx" src="js/sidebar.js"></script> -->
+  <script src="bower_components/remarkable-bootstrap-notify/bootstrap-notify.min.js"></script>
+<!--   <script src="node_modules/express/index.js"></script>
+  <script src="node_modules/web-push/src/index.js"></script>
+  <script src="node_modules/body-parser/index.js"></script>
+  <script src="node_modules/path-to-regexp/index.js"></script> -->
 </head>
 <body>
   <!-- <script src="burger.js"></script> -->
@@ -98,7 +95,9 @@
       <div id="_footer"></div>
   </div>
 
+  <script src="burger.js"></script>
   <script src="app.js"></script>
+  <!-- <script src="refresh_cache.js"></script> -->
 
   <script>
     $(document).ready(function()
@@ -133,6 +132,5 @@
       });
     </script> 
 
-    <script src="burger.js"></script>
 </body>
 </html>

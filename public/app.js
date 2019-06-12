@@ -2,9 +2,9 @@ if ('serviceWorker' in navigator)
 {
     navigator.serviceWorker.register('sw.js').then((reg) => {
         console.log('SW registered succesfull with scope: ' + reg.scope);
+        /* $.getScript('refresh_cache.js'); */
     })
     .catch((err) => console.log(err));
-
 }
 
 var deferredPrompt;
@@ -27,25 +27,21 @@ window.addEventListener("beforeinstallprompt", function (e)
 
 function addToHomeScreen() 
 {
-
     if (deferredPrompt) 
     {
-    // Show the prompt
-    deferredPrompt.prompt();
-
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice
-        .then(function (choiceResult) {
-
-        if (choiceResult.outcome === 'accepted') {
-            // hide our user interface that shows our A2HS button
-            console.log('User accepted the A2HS prompt');
-        } else {
-            console.log('User dismissed the A2HS prompt');
-        }
-
-        deferredPrompt = null;
-
+        // Show the prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice
+        .then(function (choiceResult) 
+        {
+            if (choiceResult.outcome === 'accepted') {
+                // hide our user interface that shows our A2HS button
+                console.log('User accepted the A2HS prompt');
+            } else {
+                console.log('User dismissed the A2HS prompt');
+            }
+            deferredPrompt = null;
         });
     }
 }

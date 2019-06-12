@@ -25,6 +25,7 @@
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/remarkable-bootstrap-notify/bootstrap-notify.min.js"></script>
 
 </head>
 <body>
@@ -39,7 +40,7 @@
                 </div>
                   <ul class="nav-links">
                     <li class="nav-item active btn btn-light" style="display: none">
-                      <a class="nav-link" onclick="getBlogAPI();">
+                      <a class="nav-link" onclick="getBlogAPI();" href=".">
                           <i class="fas fa-blog"></i>
                           <h4>Blog</h4>
                       </a>
@@ -70,8 +71,9 @@
         <div id="_footer"></div>
     </div>
 
+    <script src="../burger.js"></script>
+
     <script>
-        
         $(document).ready(function()
         {
             AOS.init();
@@ -85,7 +87,7 @@
         });
 
     </script>
-    <script src="../burger.js"></script>
     <script src="../fetchAPI.js"></script>
+    
 </body>
 </html>
