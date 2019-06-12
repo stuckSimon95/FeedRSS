@@ -10,15 +10,7 @@ function getBlogAPI()
     // messaggio offline
     if(!navigator.onLine)
     {
-        output += `
-        <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
-        data-aos-duration="600">
-        <i class="far fa-times-circle fa-6x" style="font-weight: 800"></i>
-        <h3> Nessuna connessione a Internet </h3>
-        <br>
-        <p style="font-size: 15px !important;">Controllare che la connessione sia presente e ricaricare la pagina</p>
-        </div>
-        `;  
+         
     }
 
     fetch(request)
@@ -83,6 +75,15 @@ function getBlogAPI()
     .catch(function(error) 
     {
         console.log(error);
+        output += `
+        <div class="card card-body mb-3 text-center list-group-item-action animated css" data-aos="fade-up"
+        data-aos-duration="600">
+        <i class="far fa-times-circle fa-6x" style="font-weight: 800"></i>
+        <h3> Nessuna connessione a Internet </h3>
+        <br>
+        <p style="font-size: 15px !important;">Controllare che la connessione sia presente e ricaricare la pagina</p>
+        </div>
+        `; 
         document.getElementById('output').innerHTML = output;
     }) 
 }

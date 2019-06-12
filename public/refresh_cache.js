@@ -1,11 +1,14 @@
-/* const seconds = 30;
+const CACHE_NAME = "cache-v1";
+const seconds = 10;
 
 refreshCacheAsync();
 
 async function refreshCacheAsync() {
-    console.log('set time out: ' + seconds + ' seconds');
-    return new Promise((resolve) => {
+    console.log('set time refresh cache: ' + seconds + ' seconds');
+    return new Promise((event) => {
+        // delete old cache every minute
         setTimeout(() => {
+            //debugger;
             caches.keys().then(cacheNames => {
                 return Promise.all(
                     cacheNames.map(function(CACHE_NAME) {
@@ -14,6 +17,14 @@ async function refreshCacheAsync() {
                     })
                 );
             });
+            
+            /* SHOW POPUP */
+            const title = 'Aggiornamento App Cache';
+            const options = {
+            body: `La cache interna dell'app è stata ripulita. 
+            Assicurarsi di essere connessi alla rete prima di proseguire nell'utilizzo dell'applicazione.
+            La cache viene ripulita ogni minuto`
+            };
 
             $.notify(
                 `La cache interna dell'app è stata ripulita. 
@@ -25,23 +36,10 @@ async function refreshCacheAsync() {
                     align: "center"
                 },
             });
-            
+            /* self.registration.showNotification(title, options); */
+           /* CICLO REFRESH */
+           refreshCacheAsync();
         }, 1000 * seconds);
-    });
-} */
-
-notify();
-
-function notify() {
-    $.notify(
-        `La cache interna dell'app è stata ripulita. 
-        Assicurarsi di essere connessi alla rete prima di proseguire nell'utilizzo dell'applicazione.
-        La cache viene ripulita ogni minuto`, {
-        timer: 1000 * 8,
-        placement: {
-            from: "top",
-            align: "center"
-        },
     });
 }
 

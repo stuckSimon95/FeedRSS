@@ -49,19 +49,14 @@
       <!-- <div id="_header" class="flex flex-row flex-nowrap items-stretch"></div> -->
 
       <nav class="navbar">
-        <div class="logo">
-          <a class="navbar-brand active animated infinite pulse" href=".">
-            <img src="img/icon-rss-56x56.png" alt="">
-          </a>
-        </div>
           <ul class="nav-links">
-            <li class="nav-item btn btn-light" style="display: none">
+            <li class="nav-item btn btn-light" style="display: block">
               <a class="nav-link" href="blogs/">
                   <i class="fas fa-blog"></i>
                   <h4>Blog</h4>
               </a>
             </li>
-            <li class="nav-item btn btn-light" style="display: none">
+            <li class="nav-item btn btn-light" style="display: block">
               <a class="nav-link" href="about/">
                   <i class="fas fa-info"></i>
                   <h4>About</h4>
@@ -83,6 +78,11 @@
             <div class="line2"></div>
             <div class="line3"></div>
           </div>
+          <div class="logo">
+              <a class="navbar-brand active animated infinite pulse" href=".">
+                <img src="img/icon-rss-56x56.png" alt="">
+              </a>
+            </div>
       </nav>
       
       <a class="nav-link btn btn-light" id="btnAd2hs" style="display: none;">
@@ -90,14 +90,20 @@
           <h4>Installa</h4>
       </a>
 
-      <h1 data-aos="zoom-in" data-aos-duration="600" class="appTitle display-4 mb-4 font-weight-bold font-italic">Feed RSS</h1>
+      <span>
+      <p class="appTitle font-weight-bold" 
+      style="font-size: 1.8rem !important;">Benvenuto in</p>
+      </span>
+
+      <!-- TITLE -->
+      <span class="appTitle font-weight-bold font-italic" 
+      style="font-size: 2.5rem !important; padding: 1%; display: inherit">Feed RSS</span>
 
       <div id="_footer"></div>
   </div>
 
   <script src="burger.js"></script>
   <script src="app.js"></script>
-  <!-- <script src="refresh_cache.js"></script> -->
 
   <script>
     $(document).ready(function()
