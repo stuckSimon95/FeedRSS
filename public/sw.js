@@ -5,7 +5,7 @@ Constants used in the functions to ensure consistency
 Adjust values to fit your desired naming and time frame conventions.
 */
 const CACHE_NAME = "cache-v1";
-const seconds = 20;
+const seconds = 60 * 1; // 1 minute
 
 refreshCacheAsync();
 
@@ -59,17 +59,6 @@ self.addEventListener('activate', function(event) {
         })
     );
 });
-  
-/* self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.open(CACHE_NAME).then(function(cache) {
-        return fetch(event.request).then(function(response) {
-            cache.put(event.request, response.clone());
-            return response;
-        });
-        })
-    );
-}); */
 
 self.addEventListener('fetch', (event) => {
     console.log('SW: fetching');
@@ -107,13 +96,10 @@ self.addEventListener('fetch', (event) => {
 });
 
 
-self.addEventListener("push", event => 
-{
+self.addEventListener("push", event => {
     console.log('[SW] Push Received.');
     console.log(`[SW] Push had this data: "${event.data.text()}"`);
     try {
-        //        var episode = JSON.parse(event.data.text());
-
         const title = "AGGIORNAMENTO CACHE";
         const options = {
             body: `La cache interna dell'app è stata ripulita. Assicurarsi di essere connessi alla rete 

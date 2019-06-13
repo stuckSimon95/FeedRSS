@@ -7,11 +7,6 @@ getBlogAPI();
 function getBlogAPI()
 {
     let output = '';
-    // messaggio offline
-    if(!navigator.onLine)
-    {
-         
-    }
 
     fetch(request)
     .then(function(response) {
@@ -81,7 +76,8 @@ function getBlogAPI()
         <i class="far fa-times-circle fa-6x" style="font-weight: 800"></i>
         <h3> Nessuna connessione a Internet </h3>
         <br>
-        <p style="font-size: 15px !important;">Controllare che la connessione sia presente e ricaricare la pagina</p>
+        <p style="font-size: 15px !important;">La cache interna dell'app è stata ripulita. 
+        Controllare che la connessione sia presente e ricaricare la pagina</p>
         </div>
         `; 
         document.getElementById('output').innerHTML = output;
@@ -149,10 +145,7 @@ function getSingleBlog(idBlog)
         })
         document.getElementById('output').innerHTML = output;
     });
- 
-    /* $('html, body').animate({
-        scrollTop: $(".scrollTop").offset().top
-    }); */
+
     $(document).scrollTop(0);
 }
 
